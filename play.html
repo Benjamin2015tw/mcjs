@@ -69,7 +69,7 @@
 </div>
 <script>
   const bgs = ["https://truth.bahamut.com.tw/s01/202601/forum/18673/acadac326d62cff01aa7aaeff49578a5.JPG", "https://truth.bahamut.com.tw/s01/202601/forum/18673/57b5ce5054f2ba795a92b1c096a5070f.JPG"];
-  const labels = ["🖼️ 切換背景（目前：白天）", "🖼️ 切換背景（目前：黃昏）"];
+  const labels = ["☀️ 切換背景（目前：白天）", "🌇 切換背景（目前：黃昏）", "🌙 切換背景（目前：夜晚）"];
   let idx = parseInt(localStorage.getItem("mc_bg_idx") || "0");
   function applyBg() {
     document.body.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('${bgs[idx]}')`;
