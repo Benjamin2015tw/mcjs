@@ -82,5 +82,30 @@
   }
   applyBg();
 </script>
+<script>
+function playMcClick(pitch = 1.0) {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = "square";
+    osc.frequency.setValueAtTime(600 * pitch, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(150 * pitch, ctx.currentTime + 0.045);
+    gain.gain.setValueAtTime(0.15, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.045);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.045);
+  } catch (e) {}
+}
+document.addEventListener("pointerdown", (e) => {
+  const target = e.target.closest("button, .btn");
+  if (target) {
+    const isCancel = target.classList.contains("mc-btn-disagree");
+    playMcClick(isCancel ? 0.7 : 1.0);
+  }
+});
+</script>
 </body>
 </html>
