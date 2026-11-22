@@ -1,1 +1,35 @@
-<meta http-equiv="refresh" content="0;url=https://lit.link/zh-tw/Web_version_Minecraft"><script>location.replace("https://lit.link/zh-tw/Web_version_Minecraft")</script>
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>網頁版 Minecraft 多版本整理 - EaglercraftX 1.8.8 / 1.12.2 / 1.21.11 / 26.3</title>
+<meta name="description" content="免費網頁版 Minecraft 多版本線上遊玩整理：EaglercraftX 1.8.8 WASM、1.12.2、1.21.11、26.3 以及 Gaius 電腦版伺服器支援。">
+<meta http-equiv="refresh" content="10;url=https://lit.link/zh-tw/Web_version_Minecraft">
+<style>
+  body { font-family: sans-serif; background: #1a202c; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; text-align: center; padding: 20px; }
+  .box { background: #2d3748; padding: 30px; border-radius: 12px; max-width: 500px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+  h1 { font-size: 22px; margin-bottom: 10px; }
+  p { color: #cbd5e0; line-height: 1.6; }
+  #count { font-size: 26px; font-weight: bold; color: #48bb78; }
+  .btn { display: inline-block; margin-top: 20px; padding: 12px 24px; background: #38a169; color: #fff; text-decoration: none; border-radius: 8px; font-weight: bold; }
+  .btn:hover { background: #2f855a; }
+</style>
+</head>
+<body>
+  <div class="box">
+    <h1>網頁版 Minecraft 多版本整理</h1>
+    <p>收錄 EaglercraftX 1.8.8、1.12.2、1.21.11、26.3 以及 Gaius 電腦版伺服器支援。</p>
+    <p>將在 <span id="count">10</span> 秒後自動跳轉至遊戲列表...</p>
+    <a class="btn" href="https://lit.link/zh-tw/Web_version_Minecraft">不想等待，立即進入</a>
+  </div>
+  <script>
+    let t = 10;
+    setInterval(() => {
+      t--;
+      if (t >= 0) document.getElementById("count").innerText = t;
+      if (t === 0) location.replace("https://lit.link/zh-tw/Web_version_Minecraft");
+    }, 1000);
+  </script>
+</body>
+</html>
