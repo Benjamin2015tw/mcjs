@@ -4,89 +4,141 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>網頁版 Minecraft 多版本整理</title>
+<link href="https://googleapis.com" rel="stylesheet">
 <style>
+  * {
+    box-sizing: border-box;
+    border-radius: 0 !important;
+  }
   body {
-    font-family: sans-serif;
-    background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url('https://gstatic.com') no-repeat center center fixed;
+    font-family: 'Press Start 2P', 'Microsoft JhengHei', monospace;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://gstatic.com') no-repeat center center fixed;
     background-size: cover;
-    color: #fff;
+    color: #ffffff;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
     margin: 0;
-    text-align: center;
     padding: 20px;
-    box-sizing: border-box;
   }
-  .box {
-    background: rgba(26, 32, 44, 0.88);
-    backdrop-filter: blur(4px);
-    padding: 30px;
-    border-radius: 12px;
-    max-width: 520px;
+  /* Minecraft 經典 UI 視窗面板 */
+  .mc-window {
+    background-color: #c6c6c6;
+    color: #3f3f3f;
+    border: 4px solid #000000;
+    box-shadow: inset 4px 4px 0px #ffffff, inset -4px -4px 0px #555555, 0 8px 25px rgba(0,0,0,0.7);
+    padding: 24px;
+    max-width: 560px;
     width: 100%;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    text-align: center;
   }
-  #count { font-size: 26px; font-weight: bold; color: #48bb78; }
-  .rules {
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 1px solid rgba(255, 255, 255, 0.15);
+  h1 {
+    font-size: 18px;
+    color: #222222;
+    text-shadow: 2px 2px 0px #ffffff;
+    margin: 0 0 18px 0;
+    line-height: 1.5;
+  }
+  /* 內嵌深色凹槽區塊 */
+  .mc-panel {
+    background-color: #8b8b8b;
+    border: 3px solid #373737;
+    box-shadow: inset 3px 3px 0px #373737, inset -3px -3px 0px #ffffff;
+    padding: 16px;
     text-align: left;
+    color: #ffffff;
+    text-shadow: 2px 2px 0px #3f3f3f;
     font-size: 14px;
-    color: #e2e8f0;
-    line-height: 1.6;
+    line-height: 1.8;
   }
-  .rules h3 {
-    margin: 0 0 8px 0;
-    font-size: 16px;
-    color: #f6ad55;
+  .mc-panel h3 {
+    margin: 0 0 10px 0;
+    font-size: 15px;
+    color: #ffff55;
+    text-shadow: 2px 2px 0px #3f3f00;
   }
-  .rules ul {
+  .mc-panel ul {
     margin: 0;
     padding-left: 20px;
   }
-  .rules li {
-    margin-bottom: 6px;
+  .mc-panel li {
+    margin-bottom: 8px;
   }
+  .mc-panel strong {
+    color: #55ff55;
+  }
+  /* Minecraft 經典按鈕 */
   .btn-group {
     margin-top: 22px;
     display: flex;
-    gap: 15px;
+    gap: 16px;
     justify-content: center;
   }
-  button {
-    padding: 12px 28px;
-    font-size: 16px;
+  .mc-btn {
+    font-family: inherit;
+    font-size: 15px;
     font-weight: bold;
-    border: none;
-    border-radius: 8px;
+    padding: 14px 28px;
+    color: #ffffff;
+    text-shadow: 2px 2px 0px #3f3f3f;
+    background-color: #727272;
+    border: 3px solid #000000;
+    box-shadow: inset 3px 3px 0px #aaaaaa, inset -3px -3px 0px #444444;
     cursor: pointer;
-    transition: 0.2s;
+    flex: 1;
   }
-  .btn-agree {
-    background: #38a169;
-    color: #fff;
+  .mc-btn-agree:hover {
+    background-color: #3c8527;
+    box-shadow: inset 3px 3px 0px #6cc349, inset -3px -3px 0px #2a641c;
+    color: #ffffa0;
   }
-  .btn-agree:hover {
-    background: #2f855a;
+  .mc-btn-disagree:hover {
+    background-color: #a82424;
+    box-shadow: inset 3px 3px 0px #e05252, inset -3px -3px 0px #6e1414;
+    color: #ffffa0;
   }
-  .btn-disagree {
-    background: #e53e3e;
-    color: #fff;
+  .mc-btn:active {
+    box-shadow: inset 3px 3px 0px #333333;
   }
-  .btn-disagree:hover {
-    background: #c53030;
+  /* 經驗值條樣式倒數 */
+  .xp-container {
+    margin-top: 20px;
+    display: none;
+  }
+  .xp-text {
+    color: #222222;
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 0px #ffffff;
+  }
+  #count {
+    color: #1e7e1e;
+    font-size: 20px;
+  }
+  .xp-bar-bg {
+    width: 100%;
+    height: 18px;
+    background-color: #222222;
+    border: 3px solid #000000;
+    padding: 2px;
+  }
+  .xp-bar-fill {
+    height: 100%;
+    width: 100%;
+    background-color: #80ff20;
+    box-shadow: inset 0 -4px 0 #40a010;
+    transition: width 1s linear;
   }
 </style>
 </head>
 <body>
-  <div class="box" id="main-box">
+  <div class="mc-window" id="main-box">
     <h1>網頁版 Minecraft 多版本整理</h1>
-    <div class="rules">
-      <h3>📜 用戶守則與注意事項</h3>
+    <div class="mc-panel">
+      <h3>[!] 用戶守則與注意事項</h3>
       <ul>
         <li><strong>非官方聲明：</strong>本站僅為連結整理，與 mcjs、Gaiusfun 等官方無關，遊戲版權皆屬上游原作者所有。</li>
         <li><strong>愛惜公益資源：</strong>聯機若使用公益節點（如 hellosmp），請切勿惡意攻擊或濫用。</li>
@@ -94,30 +146,41 @@
         <li><strong>版本異常回報：</strong>不同版本可能存在渲染或皮膚顯示等已知 Bug，遊玩前請先留意列表說明。</li>
       </ul>
     </div>
+
     <div class="btn-group" id="actions">
-      <button class="btn-agree" onclick="agree()">同意</button>
-      <button class="btn-disagree" onclick="disagree()">不同意</button>
+      <button class="mc-btn mc-btn-agree" onclick="agree()">同意</button>
+      <button class="mc-btn mc-btn-disagree" onclick="disagree()">不同意</button>
     </div>
-    <p id="status-msg" style="display:none; margin-top:20px;"></p>
+
+    <div class="xp-container" id="xp-box">
+      <div class="xp-text">世界載入中... <span id="count">5</span> 秒後自動進入</div>
+      <div class="xp-bar-bg">
+        <div class="xp-bar-fill" id="xp-fill"></div>
+      </div>
+    </div>
   </div>
 
   <script>
     function agree() {
       document.getElementById("actions").style.display = "none";
-      const msg = document.getElementById("status-msg");
-      msg.style.display = "block";
-      msg.innerHTML = '將在 <span id="count">10</span> 秒後自動跳轉至遊戲列表...';
-      let t = 10;
+      document.getElementById("xp-box").style.display = "block";
+      let t = 5;
+      const fill = document.getElementById("xp-fill");
       setInterval(() => {
         t--;
-        if (t >= 0) document.getElementById("count").innerText = t;
-        if (t === 0) location.replace("https://lit.link");
+        if (t >= 0) {
+          document.getElementById("count").innerText = t;
+          fill.style.width = (t * 20) + "%";
+        }
+        if (t === 0) {
+          location.replace("https://lit.link/zh-tw/Web_version_of_Minecraft");
+        }
       }, 1000);
     }
 
     function disagree() {
       const box = document.getElementById("main-box");
-      box.innerHTML = '<h2 style="color:#fc8181; margin:20px 0;">您已拒絕使用者守則，頁面即將關閉。</h2>';
+      box.innerHTML = '<div class="mc-panel" style="text-align:center; color:#ff5555; padding:30px 15px;">您已拒絕使用者守則，頁面即將關閉。</div>';
       setTimeout(() => {
         location.replace("about:blank");
       }, 3000);
