@@ -22,6 +22,7 @@
   <h1>Web version of Minecraft</h1>
   <div style="text-align:center; margin-bottom:14px;">
     <button onclick="toggleBg()" id="bg-btn" style="background:#555;color:#fff;border:3px solid #000;box-shadow:inset 2px 2px 0 #888,inset -2px -2px 0 #333;padding:8px 16px;cursor:pointer;font-family:inherit;font-size:13px;text-shadow:1px 1px 0 #222;">🖼️ 切換背景（目前：白天）</button>
+    <button onclick="toggleBgm()" id="bgm-btn" style="background:#555;color:#fff;border:3px solid #000;box-shadow:inset 2px 2px 0 #888,inset -2px -2px 0 #333;padding:8px 16px;cursor:pointer;font-family:inherit;font-size:13px;text-shadow:1px 1px 0 #222;margin-left:6px;">🎵 音樂：關</button>
   </div>
   <div class="notice"><strong>公告網：</strong>關注公告網以獲得最新消息（密碼已貼群組）</div>
   <h2>遊玩 Play</h2>
@@ -106,6 +107,57 @@ document.addEventListener("pointerdown", (e) => {
     playMcClick(isCancel ? 0.7 : 1.0);
   }
 });
+</script>
+<script>
+let bgmPlaying = false;
+let bgmTimer = null;
+let bgmCtx = null;
+
+function playPianoNote(freq, dur) {
+  if (!bgmCtx) bgmCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (bgmCtx.state === "suspended") bgmCtx.resume();
+  const now = bgmCtx.currentTime;
+  const osc = bgmCtx.createOscillator();
+  const gain = bgmCtx.createGain();
+  osc.type = "sine";
+  osc.frequency.setValueAtTime(freq, now);
+  gain.gain.setValueAtTime(0.001, now);
+  gain.gain.linearRampToValueAtTime(0.08, now + 0.15);
+  gain.gain.exponentialRampToValueAtTime(0.0005, now + dur);
+  osc.connect(gain);
+  gain.connect(bgmCtx.destination);
+  osc.start(now);
+  osc.stop(now + dur);
+}
+
+const c418Notes = [
+  [261.63, 3.5], [329.63, 3.5], [392.00, 3.5], [493.88, 4.0],
+  [440.00, 3.5], [392.00, 3.5], [329.63, 4.0], [293.66, 3.5],
+  [261.63, 4.5], [196.00, 4.0], [246.94, 3.5], [329.63, 4.5]
+];
+let noteIdx = 0;
+
+function toggleBgm() {
+  const btn = document.getElementById("bgm-btn");
+  if (!bgmPlaying) {
+    bgmPlaying = true;
+    btn.innerText = "🎵 音樂：開";
+    btn.style.background = "#3c8527";
+    const step = () => {
+      if (!bgmPlaying) return;
+      const [freq, dur] = c418Notes[noteIdx % c418Notes.length];
+      playPianoNote(freq, dur);
+      noteIdx++;
+      bgmTimer = setTimeout(step, 2600);
+    };
+    step();
+  } else {
+    bgmPlaying = false;
+    clearTimeout(bgmTimer);
+    btn.innerText = "🎵 音樂：關";
+    btn.style.background = "#555";
+  }
+}
 </script>
 </body>
 </html>
