@@ -6,88 +6,231 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Web version of Minecraft - 網頁版 Minecraft 多版本整理</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%2379553a'/><rect width='16' height='5' fill='%23599c34'/><rect x='2' y='5' width='3' height='2' fill='%23599c34'/><rect x='9' y='5' width='4' height='3' fill='%23599c34'/><rect x='14' y='5' width='2' height='2' fill='%23599c34'/></svg>">
+<link rel="preload" as="image" href="https://truth.bahamut.com.tw/s01/202601/forum/18673/adb403e0a7f4c7d110a0d20456a6e6fa.JPG">
+<link rel="preload" as="image" href="https://truth.bahamut.com.tw/s01/202601/forum/18673/57b5ce5054f2ba795a92b1c096a5070f.JPG">
+<link rel="preload" as="image" href="https://truth.bahamut.com.tw/s01/202008/c978967732a16354bce171ae575bb258.JPG">
 <style>
   * { box-sizing: border-box; }
   body { font-family: "Microsoft JhengHei", sans-serif; background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://truth.bahamut.com.tw/s01/202601/forum/18673/adb403e0a7f4c7d110a0d20456a6e6fa.JPG') no-repeat center center fixed; background-size: cover; transition: background-image 0.4s ease; color: #fff; margin: 0; padding: 20px; display: block; }
   .wrap { background: #c6c6c6; color: #222; border: 4px solid #000; box-shadow: inset 4px 4px 0 #fff, inset -4px -4px 0 #555; padding: 24px; max-width: 600px; width: 100%; margin: 0 auto; display: block; }
   h1, h2 { text-align: center; text-shadow: 2px 2px 0 #fff; margin: 14px 0; display: block; }
   .notice { background: #8b8b8b; color: #fff; text-shadow: 1px 1px 0 #333; border: 3px solid #373737; padding: 14px; margin-bottom: 16px; font-size: 14px; line-height: 1.6; display: block; }
+  .mc-ctrl { background: #555; color: #fff; border: 3px solid #000; box-shadow: inset 2px 2px 0 #888, inset -2px -2px 0 #333; padding: 8px 14px; cursor: pointer; font-family: inherit; font-size: 13px; text-shadow: 1px 1px 0 #222; margin: 3px; }
+  .mc-ctrl:hover { background: #666; }
+  .mc-ctrl.active { background: #3c8527; box-shadow: inset 2px 2px 0 #6cc349, inset -2px -2px 0 #2a641c; color: #ffffa0; }
+  .filter-bar { text-align: center; margin-bottom: 14px; }
   .btn { display: block; width: 100%; background: #727272; color: #fff; text-decoration: none; border: 3px solid #000; box-shadow: inset 3px 3px 0 #aaa, inset -3px -3px 0 #444; padding: 14px 16px; margin-bottom: 12px; text-shadow: 2px 2px 0 #333; }
   .btn:hover { background: #3c8527; box-shadow: inset 3px 3px 0 #6cc349, inset -3px -3px 0 #2a641c; color: #ffffa0; }
   .title { font-weight: bold; font-size: 16px; display: block; margin-bottom: 4px; }
+  .badge { display: inline-block; font-size: 11px; padding: 1px 6px; margin-left: 6px; border: 2px solid #000; vertical-align: middle; text-shadow: 1px 1px 0 #222; }
+  .badge-hot { background: #b8332a; color: #ffff55; }
+  .badge-new { background: #2b6cb0; color: #fff; }
   .desc { font-size: 12px; color: #e2e8f0; display: block; }
+  details.bug-item { background: #8b8b8b; color: #fff; border: 3px solid #373737; margin-bottom: 8px; text-shadow: 1px 1px 0 #333; }
+  details.bug-item summary { padding: 10px 14px; cursor: pointer; font-weight: bold; color: #ffff55; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+  details.bug-item summary::-webkit-details-marker { display: none; }
+  details.bug-item summary::after { content: "▼"; font-size: 12px; color: #fff; }
+  details.bug-item[open] summary::after { content: "▲"; }
+  details.bug-item[open] summary { border-bottom: 2px solid #373737; background: #777; }
+  .bug-body { padding: 12px 14px; font-size: 13px; line-height: 1.6; }
 </style>
 </head>
 <body>
 <div class="wrap">
   <h1>Web version of Minecraft</h1>
   <div style="text-align:center; margin-bottom:14px;">
-    <button onclick="toggleBg()" id="bg-btn" style="background:#555;color:#fff;border:3px solid #000;box-shadow:inset 2px 2px 0 #888,inset -2px -2px 0 #333;padding:8px 16px;cursor:pointer;font-family:inherit;font-size:13px;text-shadow:1px 1px 0 #222;">☀️ 切換背景（目前：白天）</button>
-    <button onclick="toggleBgm()" id="bgm-btn" style="background:#555;color:#fff;border:3px solid #000;box-shadow:inset 2px 2px 0 #888,inset -2px -2px 0 #333;padding:8px 16px;cursor:pointer;font-family:inherit;font-size:13px;text-shadow:1px 1px 0 #222;margin-left:6px;">🎵 音樂：關</button>
+    <button onclick="toggleBg()" id="bg-btn" class="mc-ctrl">⏰ 背景：自動（白天）</button>
+    <button onclick="toggleBgm()" id="bgm-btn" class="mc-ctrl">🎵 音樂：關</button>
   </div>
   <div class="notice"><strong>公告網：</strong>關注公告網以獲得最新消息（密碼已貼群組）</div>
+
   <h2>遊玩 Play</h2>
-  <a class="btn" href="https://1.mcjslink.144449.xyz/1.8.8wasm" target="_blank"><span class="title">EaglercraftX 1.8.8</span><span class="desc">✅ 高效能 ✅ 簡體中文 ✅ 英文 ✅ 觸控螢幕操作 ✅ 遠端連線 ✅ 內建光影</span></a>
-  <a class="btn" href="https://1.mcjslink.144449.xyz/1.12.2wasm" target="_blank"><span class="title">1.12.2wasm</span><span class="desc">✅ 高效能 ✅ 簡體中文 ✅ 遠端聯機</span></a>
-  <a class="btn" href="https://mcjs-r2.pages.dev/assets/game?ver=26.3" target="_blank"><span class="title">Eaglercraft 26.3</span><span class="desc">✅ 簡體中文 ✅ 繁體中文 ✅ 繁體中文(文言文) ✅ 觸控螢幕操作 ✅ 遠端連線</span></a>
-  <a class="btn" href="https://mcjs-r2.pages.dev/assets/game?ver=26.2" target="_blank"><span class="title">Eaglercraft 26.2</span><span class="desc">✅ 簡體中文 ✅ 英文 ✅ 觸控螢幕操作 ✅ 遠端連線</span></a>
-  <a class="btn" href="https://mcjs-r2.pages.dev/assets/game.html?ver=1.21.11" target="_blank"><span class="title">Eaglercraft 1.21.11</span><span class="desc">✅ 簡體中文 ✅ 遠端聯機</span></a>
-  <a class="btn" href="https://mcjs-r2.pages.dev/assets/game.html?ver=1.20.6" target="_blank"><span class="title">Eaglercraft 1.20.6</span><span class="desc">✅ 停更 ✅ 簡體中文 ✅ 遠端聯機</span></a>
-  <a class="btn" href="https://mcjs-r2.pages.dev/assets/game.html?ver=1.19.4" target="_blank"><span class="title">Eaglercraft 1.19.4</span><span class="desc">✅ 遠端聯機 ✅ 多版本支援</span></a>
-  <a class="btn" href="https://mcjs-r2.pages.dev/assets/game.html?ver=1.15.2" target="_blank"><span class="title">Eaglercraft 1.15.2</span><span class="desc">✅ 全部語言 ✅ 遠端聯機 ✅ 觸控螢幕操作</span></a>
-  <a class="btn" href="https://mcjs-r2.pages.dev/assets/game.html?ver=1.14.4" target="_blank"><span class="title">Eaglercraft 1.14.4</span><span class="desc">✅ 停更 ✅ 全部語言 ✅ 遠端聯機 ✅ 觸控螢幕操作</span></a>
-  <a class="btn" href="https://mcjs-r2.pages.dev/assets/game.html?ver=1.13.2" target="_blank"><span class="title">Eaglercraft 1.13.2</span><span class="desc">✅ 簡體中文 ✅ 遠端聯機</span></a>
-  <a class="btn" href="https://1.mcjslink.144449.xyz/1.5.2" target="_blank"><span class="title">Eaglercraft 1.5.2</span><span class="desc">✅ 經典懷舊版 ✅ 支援低配備裝置</span></a>
-  <h2>已知 Bug 與注意事項</h2>
-  <div class="notice">
-    <strong style="color:#ffff55;">1.13.2</strong><br>
-- 創建世界時"允許作弊" 開關失效，需要開啟共享世界才能作弊<br>
-- 物品模型圖層混亂/ 顛倒<br>
-- 箱子等不完整方塊渲染錯誤<br>
-- 本地上傳的皮膚無法正常顯示<br><br>
-    <strong style="color:#ffff55;">1.14.4</strong><br>
-- 披風渲染問題<br>
-- 更改名字要重新啟動遊戲才生效<br>
-- 本地上傳的皮膚遊戲無法保存<br>
-- 生物群系過渡開了遊戲可能會卡頓<br><br>
-    <strong style="color:#ffff55;">1.15.2</strong><br>
-- 手機遊玩可能無法顯示全景圖（不影響正常遊玩）<br><br>
-    <strong style="color:#ffff55;">1.16.5</strong><br>
-- 遊戲整體亮度偏暗<br><br>
-    <strong style="color:#ffff55;">1.20.6</strong><br>
-- 自帶節點可能無法使用（可使用 <code style="background:#222;padding:2px 6px;color:#55ff55;">wss://relay.hellosmp.kdns.fr/</code> <button onclick="navigator.clipboard.writeText('wss://relay.hellosmp.kdns.fr/');this.innerText='✅ 已複製！';this.style.background='#3c8527';setTimeout(()=>{this.innerText='📋 一鍵複製';this.style.background='#555';},2000)" style="background:#555;color:#fff;border:2px solid #000;box-shadow:inset 2px 2px 0 #888,inset -2px -2px 0 #333;padding:2px 6px;cursor:pointer;font-family:inherit;font-size:12px;margin-left:2px;">📋 一鍵複製</button>）<br><br>
-    <strong style="color:#ffff55;">1.21.11</strong><br>
-- TPS 可能有凍結等問題<br><br>
-    <strong style="color:#ffff55;">26.2</strong><br>
-- 不支援 Vulkan 渲染器<br>
-- 聯機功能以及節點設定有一點點問題（不影響正常遊玩）<br><br>
-    <strong style="color:#ffff55;">26.3</strong><br>
-- 不支援 Vulkan 渲染器<br>
-- 內建皮膚/ 披風無法選擇，需自行導入或在 26.2 中調整好後切回 26.3
+  <div class="filter-bar">
+    <button class="mc-ctrl active" onclick="filterVer('all', this)">全部版本</button>
+    <button class="mc-ctrl" onclick="filterVer('touch', this)">📱 支援手機觸控</button>
+    <button class="mc-ctrl" onclick="filterVer('shader', this)">✨ 內建光影</button>
   </div>
-  <div class="notice" style="font-size:12px;">
+
+  <div id="ver-list">
+    <a class="btn" data-tags="touch shader" href="https://1.mcjslink.144449.xyz/1.8.8wasm" target="_blank"><span class="title">EaglercraftX 1.8.8 <span class="badge badge-hot">🔥 推薦 / 最多人玩</span></span><span class="desc">✅ 高效能 ✅ 簡體中文 ✅ 英文 ✅ 觸控螢幕操作 ✅ 遠端連線 ✅ 內建光影</span></a>
+    <a class="btn" data-tags="" href="https://1.mcjslink.144449.xyz/1.12.2wasm" target="_blank"><span class="title">1.12.2wasm</span><span class="desc">✅ 高效能 ✅ 簡體中文 ✅ 遠端聯機</span></a>
+    <a class="btn" data-tags="touch" href="https://mcjs-r2.pages.dev/assets/game?ver=26.3" target="_blank"><span class="title">Eaglercraft 26.3 <span class="badge badge-new">🆕 最新版</span></span><span class="desc">✅ 簡體中文 ✅ 繁體中文 ✅ 繁體中文(文言文) ✅ 觸控螢幕操作 ✅ 遠端連線</span></a>
+    <a class="btn" data-tags="touch" href="https://mcjs-r2.pages.dev/assets/game?ver=26.2" target="_blank"><span class="title">Eaglercraft 26.2</span><span class="desc">✅ 簡體中文 ✅ 英文 ✅ 觸控螢幕操作 ✅ 遠端連線</span></a>
+    <a class="btn" data-tags="" href="https://mcjs-r2.pages.dev/assets/game.html?ver=1.21.11" target="_blank"><span class="title">Eaglercraft 1.21.11</span><span class="desc">✅ 簡體中文 ✅ 遠端聯機</span></a>
+    <a class="btn" data-tags="" href="https://mcjs-r2.pages.dev/assets/game.html?ver=1.20.6" target="_blank"><span class="title">Eaglercraft 1.20.6</span><span class="desc">✅ 停更 ✅ 簡體中文 ✅ 遠端聯機</span></a>
+    <a class="btn" data-tags="" href="https://mcjs-r2.pages.dev/assets/game.html?ver=1.19.4" target="_blank"><span class="title">Eaglercraft 1.19.4</span><span class="desc">✅ 遠端聯機 ✅ 多版本支援</span></a>
+    <a class="btn" data-tags="touch" href="https://mcjs-r2.pages.dev/assets/game.html?ver=1.15.2" target="_blank"><span class="title">Eaglercraft 1.15.2</span><span class="desc">✅ 全部語言 ✅ 遠端聯機 ✅ 觸控螢幕操作</span></a>
+    <a class="btn" data-tags="touch" href="https://mcjs-r2.pages.dev/assets/game.html?ver=1.14.4" target="_blank"><span class="title">Eaglercraft 1.14.4</span><span class="desc">✅ 停更 ✅ 全部語言 ✅ 遠端聯機 ✅ 觸控螢幕操作</span></a>
+    <a class="btn" data-tags="" href="https://mcjs-r2.pages.dev/assets/game.html?ver=1.13.2" target="_blank"><span class="title">Eaglercraft 1.13.2</span><span class="desc">✅ 簡體中文 ✅ 遠端聯機</span></a>
+    <a class="btn" data-tags="" href="https://1.mcjslink.144449.xyz/1.5.2" target="_blank"><span class="title">Eaglercraft 1.5.2</span><span class="desc">✅ 經典懷舊版 ✅ 支援低配備裝置</span></a>
+  </div>
+
+  <h2>已知 Bug 與注意事項（點擊展開）</h2>
+  <details class="bug-item">
+    <summary>1.13.2 注意事項</summary>
+    <div class="
+cat << 'EOF' > play.html
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta name="referrer" content="no-referrer">
+<meta name="google" content="notranslate">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web version of Minecraft - 網頁版 Minecraft 多版本整理</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%2379553a'/><rect width='16' height='5' fill='%23599c34'/><rect x='2' y='5' width='3' height='2' fill='%23599c34'/><rect x='9' y='5' width='4' height='3' fill='%23599c34'/><rect x='14' y='5' width='2' height='2' fill='%23599c34'/></svg>">
+<link rel="preload" as="image" href="https://truth.bahamut.com.tw/s01/202601/forum/18673/adb403e0a7f4c7d110a0d20456a6e6fa.JPG">
+<link rel="preload" as="image" href="https://truth.bahamut.com.tw/s01/202601/forum/18673/57b5ce5054f2ba795a92b1c096a5070f.JPG">
+<link rel="preload" as="image" href="https://truth.bahamut.com.tw/s01/202008/c978967732a16354bce171ae575bb258.JPG">
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: "Microsoft JhengHei", sans-serif; background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://truth.bahamut.com.tw/s01/202601/forum/18673/adb403e0a7f4c7d110a0d20456a6e6fa.JPG') no-repeat center center fixed; background-size: cover; transition: background-image 0.4s ease; color: #fff; margin: 0; padding: 20px; display: block; }
+  .wrap { background: #c6c6c6; color: #222; border: 4px solid #000; box-shadow: inset 4px 4px 0 #fff, inset -4px -4px 0 #555; padding: 24px; max-width: 600px; width: 100%; margin: 0 auto; display: block; }
+  h1, h2 { text-align: center; text-shadow: 2px 2px 0 #fff; margin: 14px 0; display: block; }
+  .notice { background: #8b8b8b; color: #fff; text-shadow: 1px 1px 0 #333; border: 3px solid #373737; padding: 14px; margin-bottom: 16px; font-size: 14px; line-height: 1.6; display: block; }
+  .mc-ctrl { background: #555; color: #fff; border: 3px solid #000; box-shadow: inset 2px 2px 0 #888, inset -2px -2px 0 #333; padding: 8px 14px; cursor: pointer; font-family: inherit; font-size: 13px; text-shadow: 1px 1px 0 #222; margin: 3px; }
+  .mc-ctrl:hover { background: #666; }
+  .mc-ctrl.active { background: #3c8527; box-shadow: inset 2px 2px 0 #6cc349, inset -2px -2px 0 #2a641c; color: #ffffa0; }
+  .filter-bar { text-align: center; margin-bottom: 14px; }
+  .btn { display: block; width: 100%; background: #727272; color: #fff; text-decoration: none; border: 3px solid #000; box-shadow: inset 3px 3px 0 #aaa, inset -3px -3px 0 #444; padding: 14px 16px; margin-bottom: 12px; text-shadow: 2px 2px 0 #333; }
+  .btn:hover { background: #3c8527; box-shadow: inset 3px 3px 0 #6cc349, inset -3px -3px 0 #2a641c; color: #ffffa0; }
+  .title { font-weight: bold; font-size: 16px; display: block; margin-bottom: 4px; }
+  .badge { display: inline-block; font-size: 11px; padding: 1px 6px; margin-left: 6px; border: 2px solid #000; vertical-align: middle; text-shadow: 1px 1px 0 #222; }
+  .badge-hot { background: #b8332a; color: #ffff55; }
+  .badge-new { background: #2b6cb0; color: #fff; }
+  .desc { font-size: 12px; color: #e2e8f0; display: block; }
+  details.bug-item { background: #8b8b8b; color: #fff; border: 3px solid #373737; margin-bottom: 8px; text-shadow: 1px 1px 0 #333; }
+  details.bug-item summary { padding: 10px 14px; cursor: pointer; font-weight: bold; color: #ffff55; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+  details.bug-item summary::-webkit-details-marker { display: none; }
+  details.bug-item summary::after { content: "▼"; font-size: 12px; color: #fff; }
+  details.bug-item[open] summary::after { content: "▲"; }
+  details.bug-item[open] summary { border-bottom: 2px solid #373737; background: #777; }
+  .bug-body { padding: 12px 14px; font-size: 13px; line-height: 1.6; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Web version of Minecraft</h1>
+  <div style="text-align:center; margin-bottom:14px;">
+    <button onclick="toggleBg()" id="bg-btn" class="mc-ctrl">⏰ 背景：自動（白天）</button>
+    <button onclick="toggleBgm()" id="bgm-btn" class="mc-ctrl">🎵 音樂：關</button>
+  </div>
+  <div class="notice"><strong>公告網：</strong>關注公告網以獲得最新消息（密碼已貼群組）</div>
+
+  <h2>遊玩 Play</h2>
+  <div class="filter-bar">
+    <button class="mc-ctrl active" onclick="filterVer('all', this)">全部版本</button>
+    <button class="mc-ctrl" onclick="filterVer('touch', this)">📱 支援手機觸控</button>
+    <button class="mc-ctrl" onclick="filterVer('shader', this)">✨ 內建光影</button>
+  </div>
+
+  <div id="ver-list">
+    <a class="btn" data-tags="touch shader" href="https://1.mcjslink.144449.xyz/1.8.8wasm" target="_blank"><span class="title">EaglercraftX 1.8.8 <span class="badge badge-hot">🔥 推薦 / 最多人玩</span></span><span class="desc">✅ 高效能 ✅ 簡體中文 ✅ 英文 ✅ 觸控螢幕操作 ✅ 遠端連線 ✅ 內建光影</span></a>
+    <a class="btn" data-tags="" href="https://1.mcjslink.144449.xyz/1.12.2wasm" target="_blank"><span class="title">1.12.2wasm</span><span class="desc">✅ 高效能 ✅ 簡體中文 ✅ 遠端聯機</span></a>
+    <a class="btn" data-tags="touch" href="https://mcjs-r2.pages.dev/assets/game?ver=26.3" target="_blank"><span class="title">Eaglercraft 26.3 <span class="badge badge-new">🆕 最新版</span></span><span class="desc">✅ 簡體中文 ✅ 繁體中文 ✅ 繁體中文(文言文) ✅ 觸控螢幕操作 ✅ 遠端連線</span></a>
+    <a class="btn" data-tags="touch" href="https://mcjs-r2.pages.dev/assets/game?ver=26.2" target="_blank"><span class="title">Eaglercraft 26.2</span><span class="desc">✅ 簡體中文 ✅ 英文 ✅ 觸控螢幕操作 ✅ 遠端連線</span></a>
+    <a class="btn" data-tags="" href="https://mcjs-r2.pages.dev/assets/game.html?ver=1.21.11" target="_blank"><span class="title">Eaglercraft 1.21.11</span><span class="desc">✅ 簡體中文 ✅ 遠端聯機</span></a>
+    <a class="btn" data-tags="" href="https://mcjs-r2.pages.dev/assets/game.html?ver=1.20.6" target="_blank"><span class="title">Eaglercraft 1.20.6</span><span class="desc">✅ 停更 ✅ 簡體中文 ✅ 遠端聯機</span></a>
+    <a class="btn" data-tags="" href="https://mcjs-r2.pages.dev/assets/game.html?ver=1.19.4" target="_blank"><span class="title">Eaglercraft 1.19.4</span><span class="desc">✅ 遠端聯機 ✅ 多版本支援</span></a>
+    <a class="btn" data-tags="touch" href="https://mcjs-r2.pages.dev/assets/game.html?ver=1.15.2" target="_blank"><span class="title">Eaglercraft 1.15.2</span><span class="desc">✅ 全部語言 ✅ 遠端聯機 ✅ 觸控螢幕操作</span></a>
+    <a class="btn" data-tags="touch" href="https://mcjs-r2.pages.dev/assets/game.html?ver=1.14.4" target="_blank"><span class="title">Eaglercraft 1.14.4</span><span class="desc">✅ 停更 ✅ 全部語言 ✅ 遠端聯機 ✅ 觸控螢幕操作</span></a>
+    <a class="btn" data-tags="" href="https://mcjs-r2.pages.dev/assets/game.html?ver=1.13.2" target="_blank"><span class="title">Eaglercraft 1.13.2</span><span class="desc">✅ 簡體中文 ✅ 遠端聯機</span></a>
+    <a class="btn" data-tags="" href="https://1.mcjslink.144449.xyz/1.5.2" target="_blank"><span class="title">Eaglercraft 1.5.2</span><span class="desc">✅ 經典懷舊版 ✅ 支援低配備裝置</span></a>
+  </div>
+
+  <h2>已知 Bug 與注意事項（點擊展開）</h2>
+  <details class="bug-item">
+    <summary>1.13.2 注意事項</summary>
+    <div class="bug-body">
+      - 創建世界時「允許作弊」開關失效，需要開啟共享世界才能作弊<br>
+      - 物品模型圖層混亂 / 顛倒<br>
+      - 箱子等不完整方塊渲染錯誤<br>
+      - 本地上傳的皮膚無法正常顯示
+    </div>
+  </details>
+  <details class="bug-item">
+    <summary>1.14.4 注意事項</summary>
+    <div class="bug-body">
+      - 披風渲染問題<br>
+      - 更改名字要重新啟動遊戲才生效<br>
+      - 本地上傳的皮膚遊戲無法保存<br>
+      - 生物群系過渡開了遊戲可能會卡頓
+    </div>
+  </details>
+  <details class="bug-item">
+    <summary>1.15.2 & 1.16.5 注意事項</summary>
+    <div class="bug-body">
+      <strong>1.15.2：</strong>手機遊玩可能無法顯示全景圖（不影響正常遊玩）<br>
+      <strong>1.16.5：</strong>遊戲整體亮度偏暗
+    </div>
+  </details>
+  <details class="bug-item" open>
+    <summary>1.20.6 聯機節點解決方法</summary>
+    <div class="bug-body">
+      自帶節點可能無法使用（可使用 <code style="background:#222;padding:2px 6px;color:#55ff55;">wss://relay.hellosmp.kdns.fr/</code> <button onclick="navigator.clipboard.writeText('wss://relay.hellosmp.kdns.fr/');this.innerText='✅ 已複製！';this.style.background='#3c8527';setTimeout(()=>{this.innerText='📋 一鍵複製';this.style.background='#555';},2000)" style="background:#555;color:#fff;border:2px solid #000;box-shadow:inset 2px 2px 0 #888,inset -2px -2px 0 #333;padding:2px 6px;cursor:pointer;font-family:inherit;font-size:12px;margin-left:2px;">📋 一鍵複製</button>）
+    </div>
+  </details>
+  <details class="bug-item">
+    <summary>1.21.11 / 26.2 / 26.3 注意事項</summary>
+    <div class="bug-body">
+      <strong>1.21.11：</strong>TPS 可能有凍結等問題<br><br>
+      <strong>26.2：</strong>不支援 Vulkan 渲染器；聯機功能以及節點設定有一點點問題（不影響正常遊玩）<br><br>
+      <strong>26.3：</strong>不支援 Vulkan 渲染器；內建皮膚 / 披風無法選擇，需自行導入或在 26.2 中調整好後切回 26.3
+    </div>
+  </details>
+
+  <div class="notice" style="font-size:12px; margin-top:16px;">
     <strong>聲明：</strong>本網站僅為整理網頁版 MC 連結，非官方網站，版權歸上游作者所有。
   </div>
 </div>
+
 <script>
   const bgs = [
     "https://truth.bahamut.com.tw/s01/202601/forum/18673/adb403e0a7f4c7d110a0d20456a6e6fa.JPG",
     "https://truth.bahamut.com.tw/s01/202601/forum/18673/57b5ce5054f2ba795a92b1c096a5070f.JPG",
     "https://truth.bahamut.com.tw/s01/202008/c978967732a16354bce171ae575bb258.JPG"
   ];
-  const labels = ["☀️ 切換背景（目前：白天）", "🌇 切換背景（目前：黃昏）", "🌙 切換背景（目前：夜晚）"];
-  let idx = parseInt(localStorage.getItem("mc_bg_idx") || "0");
-  if (idx < 0 || idx >= bgs.length) idx = 0;
-  function applyBg() {
-    document.body.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('${bgs[idx]}')`;
-    document.getElementById("bg-btn").innerText = labels[idx];
+  const timeNames = ["白天", "黃昏", "夜晚"];
+  let bgMode = parseInt(localStorage.getItem("mc_bg_mode") || "0");
+  if (bgMode < 0 || bgMode > 3) bgMode = 0;
+
+  function getAutoIndex() {
+    const h = new Date().getHours();
+    if (h >= 6 && h < 16) return 0;
+    if (h >= 16 && h < 19) return 1;
+    return 2;
   }
+
+  function applyBg() {
+    let imgIdx, labelText;
+    if (bgMode === 0) {
+      imgIdx = getAutoIndex();
+      labelText = `⏰ 背景：自動（${timeNames[imgIdx]}）`;
+    } else {
+      imgIdx = bgMode - 1;
+      const icons = ["☀️", "🌇", "🌙"];
+      labelText = `${icons[imgIdx]} 切換背景（目前：${timeNames[imgIdx]}）`;
+    }
+    document.body.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('${bgs[imgIdx]}')`;
+    document.getElementById("bg-btn").innerText = labelText;
+  }
+
   function toggleBg() {
-    idx = (idx + 1) % bgs.length;
-    localStorage.setItem("mc_bg_idx", idx);
+    bgMode = (bgMode + 1) % 4;
+    localStorage.setItem("mc_bg_mode", bgMode);
     applyBg();
   }
   applyBg();
+
+  function filterVer(tag, el) {
+    document.querySelectorAll('.filter-bar .mc-ctrl').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    document.querySelectorAll('#ver-list .btn').forEach(btn => {
+      const tags = btn.getAttribute('data-tags') || '';
+      btn.style.display = (tag === 'all' || tags.includes(tag)) ? 'block' : 'none';
+    });
+  }
 </script>
 <script>
 function playMcClick(pitch = 1.0) {
@@ -107,10 +250,9 @@ function playMcClick(pitch = 1.0) {
   } catch (e) {}
 }
 document.addEventListener("pointerdown", (e) => {
-  const target = e.target.closest("button, .btn");
+  const target = e.target.closest("button, .btn, summary");
   if (target) {
-    const isCancel = target.classList.contains("mc-btn-disagree");
-    playMcClick(isCancel ? 0.7 : 1.0);
+    playMcClick(1.0);
   }
 });
 </script>
@@ -148,7 +290,7 @@ function toggleBgm() {
   if (!bgmPlaying) {
     bgmPlaying = true;
     btn.innerText = "🎵 音樂：開";
-    btn.style.background = "#3c8527";
+    btn.classList.add("active");
     const step = () => {
       if (!bgmPlaying) return;
       const [freq, dur] = c418Notes[noteIdx % c418Notes.length];
@@ -161,7 +303,7 @@ function toggleBgm() {
     bgmPlaying = false;
     clearTimeout(bgmTimer);
     btn.innerText = "🎵 音樂：關";
-    btn.style.background = "#555";
+    btn.classList.remove("active");
   }
 }
 </script>
