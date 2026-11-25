@@ -8,7 +8,7 @@
 <title>Web version of Minecraft - 網頁版 Minecraft 多版本整理</title>
 <style>
   * { box-sizing: border-box; }
-  body { font-family: "Microsoft JhengHei", sans-serif; background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://truth.bahamut.com.tw/s01/202601/forum/18673/acadac326d62cff01aa7aaeff49578a5.JPG') no-repeat center center fixed; background-size: cover; transition: background-image 0.4s ease; color: #fff; margin: 0; padding: 20px; display: block; }
+  body { font-family: "Microsoft JhengHei", sans-serif; background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://truth.bahamut.com.tw/s01/202601/forum/18673/adb403e0a7f4c7d110a0d20456a6e6fa.JPG') no-repeat center center fixed; background-size: cover; transition: background-image 0.4s ease; color: #fff; margin: 0; padding: 20px; display: block; }
   .wrap { background: #c6c6c6; color: #222; border: 4px solid #000; box-shadow: inset 4px 4px 0 #fff, inset -4px -4px 0 #555; padding: 24px; max-width: 600px; width: 100%; margin: 0 auto; display: block; }
   h1, h2 { text-align: center; text-shadow: 2px 2px 0 #fff; margin: 14px 0; display: block; }
   .notice { background: #8b8b8b; color: #fff; text-shadow: 1px 1px 0 #333; border: 3px solid #373737; padding: 14px; margin-bottom: 16px; font-size: 14px; line-height: 1.6; display: block; }
@@ -22,7 +22,7 @@
 <div class="wrap">
   <h1>Web version of Minecraft</h1>
   <div style="text-align:center; margin-bottom:14px;">
-    <button onclick="toggleBg()" id="bg-btn" style="background:#555;color:#fff;border:3px solid #000;box-shadow:inset 2px 2px 0 #888,inset -2px -2px 0 #333;padding:8px 16px;cursor:pointer;font-family:inherit;font-size:13px;text-shadow:1px 1px 0 #222;">🖼️ 切換背景（目前：白天）</button>
+    <button onclick="toggleBg()" id="bg-btn" style="background:#555;color:#fff;border:3px solid #000;box-shadow:inset 2px 2px 0 #888,inset -2px -2px 0 #333;padding:8px 16px;cursor:pointer;font-family:inherit;font-size:13px;text-shadow:1px 1px 0 #222;">☀️ 切換背景（目前：白天）</button>
     <button onclick="toggleBgm()" id="bgm-btn" style="background:#555;color:#fff;border:3px solid #000;box-shadow:inset 2px 2px 0 #888,inset -2px -2px 0 #333;padding:8px 16px;cursor:pointer;font-family:inherit;font-size:13px;text-shadow:1px 1px 0 #222;margin-left:6px;">🎵 音樂：關</button>
   </div>
   <div class="notice"><strong>公告網：</strong>關注公告網以獲得最新消息（密碼已貼群組）</div>
@@ -41,38 +41,43 @@
   <h2>已知 Bug 與注意事項</h2>
   <div class="notice">
     <strong style="color:#ffff55;">1.13.2</strong><br>
-    • 創建世界時"允許作弊" 開關失效，需要開啟共享世界才能作弊<br>
-    • 物品模型圖層混亂/ 顛倒<br>
-    • 箱子等不完整方塊渲染錯誤<br>
-    • 本地上傳的皮膚無法正常顯示<br><br>
+- 創建世界時"允許作弊" 開關失效，需要開啟共享世界才能作弊<br>
+- 物品模型圖層混亂/ 顛倒<br>
+- 箱子等不完整方塊渲染錯誤<br>
+- 本地上傳的皮膚無法正常顯示<br><br>
     <strong style="color:#ffff55;">1.14.4</strong><br>
-    • 披風渲染問題<br>
-    • 更改名字要重新啟動遊戲才生效<br>
-    • 本地上傳的皮膚遊戲無法保存<br>
-    • 生物群系過渡開了遊戲可能會卡頓<br><br>
+- 披風渲染問題<br>
+- 更改名字要重新啟動遊戲才生效<br>
+- 本地上傳的皮膚遊戲無法保存<br>
+- 生物群系過渡開了遊戲可能會卡頓<br><br>
     <strong style="color:#ffff55;">1.15.2</strong><br>
-    • 手機遊玩可能無法顯示全景圖（不影響正常遊玩）<br><br>
+- 手機遊玩可能無法顯示全景圖（不影響正常遊玩）<br><br>
     <strong style="color:#ffff55;">1.16.5</strong><br>
-    • 遊戲整體亮度偏暗<br><br>
+- 遊戲整體亮度偏暗<br><br>
     <strong style="color:#ffff55;">1.20.6</strong><br>
-    • 自帶節點可能無法使用（可使用 <code style="background:#222;padding:2px 6px;color:#55ff55;">wss://relay.hellosmp.kdns.fr/</code> <button onclick="navigator.clipboard.writeText('wss://relay.hellosmp.kdns.fr/');this.innerText='✅ 已複製！';this.style.background='#3c8527';setTimeout(()=>{this.innerText='📋 一鍵複製';this.style.background='#555';},2000)" style="background:#555;color:#fff;border:2px solid #000;box-shadow:inset 2px 2px 0 #888,inset -2px -2px 0 #333;padding:2px 6px;cursor:pointer;font-family:inherit;font-size:12px;margin-left:2px;">📋 一鍵複製</button>）<br><br>
+- 自帶節點可能無法使用（可使用 <code style="background:#222;padding:2px 6px;color:#55ff55;">wss://relay.hellosmp.kdns.fr/</code> <button onclick="navigator.clipboard.writeText('wss://relay.hellosmp.kdns.fr/');this.innerText='✅ 已複製！';this.style.background='#3c8527';setTimeout(()=>{this.innerText='📋 一鍵複製';this.style.background='#555';},2000)" style="background:#555;color:#fff;border:2px solid #000;box-shadow:inset 2px 2px 0 #888,inset -2px -2px 0 #333;padding:2px 6px;cursor:pointer;font-family:inherit;font-size:12px;margin-left:2px;">📋 一鍵複製</button>）<br><br>
     <strong style="color:#ffff55;">1.21.11</strong><br>
-    • TPS 可能有凍結等問題<br><br>
+- TPS 可能有凍結等問題<br><br>
     <strong style="color:#ffff55;">26.2</strong><br>
-    • 不支援 Vulkan 渲染器<br>
-    • 聯機功能以及節點設定有一點點問題（不影響正常遊玩）<br><br>
+- 不支援 Vulkan 渲染器<br>
+- 聯機功能以及節點設定有一點點問題（不影響正常遊玩）<br><br>
     <strong style="color:#ffff55;">26.3</strong><br>
-    • 不支援 Vulkan 渲染器<br>
-    • 內建皮膚/ 披風無法選擇，需自行導入或在 26.2 中調整好後切回 26.3
+- 不支援 Vulkan 渲染器<br>
+- 內建皮膚/ 披風無法選擇，需自行導入或在 26.2 中調整好後切回 26.3
   </div>
   <div class="notice" style="font-size:12px;">
     <strong>聲明：</strong>本網站僅為整理網頁版 MC 連結，非官方網站，版權歸上游作者所有。
   </div>
 </div>
 <script>
-  const bgs = ["https://bahamut.com.tw", "https://bahamut.com.tw", "https://truth.bahamut.com.tw/s01/202008/c978967732a16354bce171ae575bb258.JPG"];
+  const bgs = [
+    "https://truth.bahamut.com.tw/s01/202601/forum/18673/adb403e0a7f4c7d110a0d20456a6e6fa.JPG",
+    "https://truth.bahamut.com.tw/s01/202601/forum/18673/57b5ce5054f2ba795a92b1c096a5070f.JPG",
+    "https://truth.bahamut.com.tw/s01/202008/c978967732a16354bce171ae575bb258.JPG"
+  ];
   const labels = ["☀️ 切換背景（目前：白天）", "🌇 切換背景（目前：黃昏）", "🌙 切換背景（目前：夜晚）"];
   let idx = parseInt(localStorage.getItem("mc_bg_idx") || "0");
+  if (idx < 0 || idx >= bgs.length) idx = 0;
   function applyBg() {
     document.body.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('${bgs[idx]}')`;
     document.getElementById("bg-btn").innerText = labels[idx];
